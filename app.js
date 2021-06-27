@@ -36,8 +36,7 @@ d3.json("samples.json").then(function(data){
     //var xBar940 = slicedData1940;
     //It's using the index instead of the value
     var yBar940 = slicedData2940.map(x => `ID ${x}`);
-    console.log(yBar940);
-    console.log(typeof yBar940);
+    //console.log(yBar940);
 
     var dataBar = [{
         x: slicedData1940.reverse(),
@@ -48,7 +47,7 @@ d3.json("samples.json").then(function(data){
     }];
 
     var layout = {
-        title: "Hello"
+        title: "Top 10 Bacteria Cultures Found"
     }
 
     var config = {responsive: true};
@@ -57,26 +56,56 @@ d3.json("samples.json").then(function(data){
     //Creating bubble graph
     //Selecting top 10 sample_values for our sample_item
     var sampleValues940 = initPlotData[0].sample_values;
-    console.log(sampleValues940);
+    //console.log(sampleValues940);
     //Selecting top 10 otu_ids for our sample_item
     var OtuID940 = initPlotData[0].otu_ids;
-    console.log(OtuID940);
+    //console.log(OtuID940);
     //Selecting top 10 otu_labels for our sample_item
     var OtuLabels940 = initPlotData[0].otu_labels;
-    console.log(OtuLabels940);
+    //console.log(OtuLabels940);
 
     var xBubble940 = OtuID940;
     var yBubble940 = sampleValues940;
 
-    dataHover940 = [{
+    var dataBubble940 = [{
             x: xBubble940,
             y: yBubble940.reverse(),
+            text: OtuLabels940,
             mode: 'markers',
             marker: {size: sampleValues940, color: xBubble940}
     
         }];
 
-    Plotly.newPlot("bubble", dataHover940, layout, config);
+    var layout = {
+        title: "Bacteria Cultures Per Sample"
+    }
+
+    Plotly.newPlot("bubble", dataBubble940, layout, config);
+
+
+    //function to get entry for metadata with id that matches selectedID
+    // function filterKeys(item){
+    //     return item.id == 940;
+    // };
+
+    //DEMOGRAPHIC INFO SECTION
+    //Calling that function on our data entry
+    var demBox940 = data.metadata.filter(id940);
+    //console.log(`demInfo is ${demBox940}`);
+
+    var demInfoJson = demBox940[0];
+    console.log(demInfoJson);
+
+    //var demInfoKeys = Object.keys(demInfoJson);
+    //console.log(demInfoKeys);
+
+    var demInfoPanel = d3.select("#sample-metadata");
+
+    demInfoPanel.html('');
+    Object.entries(demInfoJson).map(([key, value]) => {
+        demInfoPanel.append("p").html(`<b>${key}:</b> ${value}`)
+    });
+
 
 
 
@@ -213,17 +242,37 @@ function buildPlot(){
 
     //Selecting top 10 sample_values for our sample_item
     var sampleValues = sampleItem[0].sample_values;
-    console.log("Update")
-    console.log(sampleValues);
+    //console.log("Update")
+    //console.log(sampleValues);
     //Selecting top 10 otu_ids for our sample_item
     var OtuID = sampleItem[0].otu_ids;
-    console.log(OtuID);
+    //console.log(OtuID);
     //Selecting top 10 otu_labels for our sample_item
     var OtuLabels = sampleItem[0].otu_labels;
-    console.log(OtuLabels);
+    //console.log(OtuLabels);
 
     var xBubble = OtuID;
     var yBubble = sampleValues;
+
+
+    //It's using the index instead of the value
+    var yBar = slicedData2.map(x => `ID ${x}`);
+    //console.log(yBar940);
+
+    var dataBar = [{
+        x: slicedData1.reverse(),
+        y: yBar.reverse(),
+        text: hoverTextData.reverse(),
+        type: 'bar',
+        orientation: 'h'
+    }];
+
+    var layout1 = {
+        title: "Top 10 Bacteria Cultures Found"
+    }
+
+    var config = {responsive: true};
+    Plotly.newPlot("bar", dataBar, layout1, config);
 
 
 
@@ -242,18 +291,24 @@ function buildPlot(){
     // Plotly.restyle("bubble", "y", yBubble);
     // Plotly.restyle("bubble", "size", sampleValues);
 
-    var tempData = [{
+    var bubbleData = [{
         x: xBubble,
-        y: yBubble,
+        y: yBubble.reverse(),
         mode: 'markers',
-        marker: {size: sampleValues}
+        text: OtuLabels, 
+        marker: {size: sampleValues, color: xBubble}
     }];
-    
-    Plotly.newPlot("bubble", tempData);
+
+    var layout2 = {
+        title: "Bacteria Cultures Per Sample"
+    }
+
+
+    Plotly.newPlot("bubble", bubbleData, layout2, config);
 
 
 
-    })
+    });
 
     
 };
