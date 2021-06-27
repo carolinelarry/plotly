@@ -11,16 +11,101 @@ d3.json("samples.json").then(function(data){
         .text(sample)
         .property("value", sample);
     });
-});
 
-    data=[{
-        x: [0,10,20,30],
-        y: [10,10,10,10],
-        type: "bar",
+    //Picking up array with id=940 to use as our initial data
+    function id940(item){
+        return item.id == 940;
+    };   
+
+    //Filtering data to where id=940
+    var initPlotData = data.samples.filter(id940);
+    //console.log(initPlotData);
+
+
+    //Creating bar graph
+    //Selecting top 10 sample_values for our sample_item
+    var slicedData1940 = initPlotData[0].sample_values.slice(0,10);
+    //console.log(slicedData1940);
+    //Selecting top 10 otu_ids for our sample_item
+    var slicedData2940 = initPlotData[0].otu_ids.slice(0,10);
+    //console.log(slicedData2940);
+    //Selecting top 10 otu_labels for our sample_item
+    var hoverTextData940 = initPlotData[0].otu_labels.slice(0,10);
+    //console.log(hoverTextData940);
+
+    //var xBar940 = slicedData1940;
+    //It's using the index instead of the value
+    var yBar940 = slicedData2940.map(x => `ID ${x}`);
+    console.log(yBar940);
+    console.log(typeof yBar940);
+
+    var dataBar = [{
+        x: slicedData1940.reverse(),
+        y: yBar940.reverse(),
+        text: hoverTextData940.reverse(),
+        type: 'bar',
         orientation: 'h'
     }];
 
-    Plotly.newPlot("bar", data);
+    var layout = {
+        title: "Hello"
+    }
+
+    var config = {responsive: true};
+    Plotly.newPlot("bar", dataBar, layout, config);
+
+    //Creating bubble graph
+    //Selecting top 10 sample_values for our sample_item
+    var sampleValues940 = initPlotData[0].sample_values;
+    console.log(sampleValues940);
+    //Selecting top 10 otu_ids for our sample_item
+    var OtuID940 = initPlotData[0].otu_ids;
+    console.log(OtuID940);
+    //Selecting top 10 otu_labels for our sample_item
+    var OtuLabels940 = initPlotData[0].otu_labels;
+    console.log(OtuLabels940);
+
+    var xBubble940 = OtuID940;
+    var yBubble940 = sampleValues940;
+
+    dataHover940 = [{
+            x: xBubble940,
+            y: yBubble940.reverse(),
+            mode: 'markers',
+            marker: {size: sampleValues940, color: xBubble940}
+    
+        }];
+
+    Plotly.newPlot("bubble", dataHover940, layout, config);
+
+
+
+});
+
+    //INIT FUNCTION
+    // dataBar =[{
+    //     x: [10,20,30,40],
+    //     y: ["ID 1", "ID 2", "ID 3", "ID 4"],
+    //     text: ['Text 1', 'Text 2', 'Text 3', 'Text 4'],
+    //     type: "bar",
+    //     orientation: 'h'
+    // }];
+
+    // Plotly.newPlot("bar", dataBar);
+
+    // dataHover = [{
+    //     x: [10,20,30,40],
+    //     y: [10,12,13,14],
+    //     mode: 'markers',
+    //     marker: {size:[40,60,80,100], color: ['green', 'green', 'green', 'green']}
+
+    // }];
+
+    // Plotly.newPlot("bubble", dataHover);
+    //END OF INIT FUNCTION
+
+
+
 };
 
 
@@ -41,6 +126,7 @@ function buildPlot(){
         .property("value", sample);
     });
 
+
     //Finding name of selected id
     var selectedID = dropdownMenu.property("value");
     //console.log(selectedID);
@@ -49,7 +135,6 @@ function buildPlot(){
         //console.log(new1);
 
     //Creating function that finds id that is equal to selectedID 
-    //THIS WORKS!!!!
     function filterID(item){
         return item.id == selectedID;
     };   
@@ -57,7 +142,7 @@ function buildPlot(){
     //This is the sample entry that has the same ID as selectedID
     //filtering samples array by filterID function
     var sampleItem = data.samples.filter(filterID);
-    console.log(sampleItem);
+    //console.log(sampleItem);
 
       
 
@@ -72,27 +157,75 @@ function buildPlot(){
         
     //Selecting top 10 sample_values for our sample_item
     var slicedData1 = sampleItem[0].sample_values.slice(0,10);
-    console.log(slicedData1);
+    //console.log(slicedData1);
+    //Selecting top 10 otu_ids for our sample_item
     var slicedData2 = sampleItem[0].otu_ids.slice(0,10);
-    console.log(slicedData2);
+    //console.log(slicedData2);
+    //Selecting top 10 otu_labels for our sample_item
+    var hoverTextData = sampleItem[0].otu_labels.slice(0,10);
+    //console.log(hoverTextData);
         
-        //Will return key value pairs for table
-        var keys = Object.entries(data.metadata);
-        //console.log(keys);
-    
-    // var x = [];
-    // var y = [];
+    //Will return key value pairs for table
+    var keys = Object.entries(data.metadata);
+    //console.log(keys);
 
-    //ADD THIS BACK AT END WHEN READY FOR GRAPH
-    // var data = [{
-    //      x = slicedData1,
-    //      y = slicedData2,
-    //      //type:"bar",
-        
-    //      }];
+    //function to get entry for metadata with id that matches selectedID
+    function filterKeys(item){
+        return item.id == selectedID;
+    };
 
-    var x = slicedData1;
-    var y = slicedData2;
+    //DEMOGRAPHIC INFO SECTION
+    //Calling that function on our data entry
+    var demInfo = data.metadata.filter(filterKeys);
+    //console.log(demInfo);
+
+    var demInfoJson = demInfo[0];
+    //console.log(demInfoJson);
+
+    //var demInfoKeys = Object.keys(demInfoJson);
+    //console.log(demInfoKeys);
+
+    var demInfoPanel = d3.select("#sample-metadata");
+
+    demInfoPanel.html('');
+    Object.entries(demInfoJson).map(([key, value]) => {
+        demInfoPanel.append("p").html(`<b>${key}:</b> ${value}`)
+    });
+
+    //console.log(demInfoEntries);
+
+    //Placing key/value pairs in html file
+    //var demInfoID = d3.select("#sample-metadata")//.text(demInfoEntries);
+
+    // demInfoEntries.forEach((item) => {
+    //     demInfoID.text(item);
+    // }
+
+    //)
+
+
+
+    var xBar = slicedData1;
+    //It's using the index instead of the value
+    var yBar = slicedData2.toString();
+    //console.log(y);
+
+
+    //Selecting top 10 sample_values for our sample_item
+    var sampleValues = sampleItem[0].sample_values;
+    console.log("Update")
+    console.log(sampleValues);
+    //Selecting top 10 otu_ids for our sample_item
+    var OtuID = sampleItem[0].otu_ids;
+    console.log(OtuID);
+    //Selecting top 10 otu_labels for our sample_item
+    var OtuLabels = sampleItem[0].otu_labels;
+    console.log(OtuLabels);
+
+    var xBubble = OtuID;
+    var yBubble = sampleValues;
+
+
 
         
 
@@ -101,8 +234,24 @@ function buildPlot(){
         // console.log(`idNum is ${idNum}`);
         
     //FIX LATER: X IS NOT DEFINED
-    Plotly.restyle("bar", "x", [x]);
-    Plotly.restyle("bar", "y", [y]);
+    // Plotly.restyle("bar", "x", [xBar]);
+    // Plotly.restyle("bar", "y", [yBar]);
+    // Plotly.restyle("bar", "text", [hoverTextData]);
+
+    // Plotly.restyle("bubble", "x", xBubble);
+    // Plotly.restyle("bubble", "y", yBubble);
+    // Plotly.restyle("bubble", "size", sampleValues);
+
+    var tempData = [{
+        x: xBubble,
+        y: yBubble,
+        mode: 'markers',
+        marker: {size: sampleValues}
+    }];
+    
+    Plotly.newPlot("bubble", tempData);
+
+
 
     })
 
