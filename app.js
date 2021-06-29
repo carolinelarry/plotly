@@ -235,16 +235,6 @@ function buildPlot(){
     var config = {responsive: true};
     Plotly.newPlot("bar", dataBar, layout1, config);
 
-        
-    //FIX LATER: X IS NOT DEFINED
-    // Plotly.restyle("bar", "x", [xBar]);
-    // Plotly.restyle("bar", "y", [yBar]);
-    // Plotly.restyle("bar", "text", [hoverTextData]);
-
-    // Plotly.restyle("bubble", "x", xBubble);
-    // Plotly.restyle("bubble", "y", yBubble);
-    // Plotly.restyle("bubble", "size", sampleValues);
-
     //Creatind data array for bubble chart for selected id
     var bubbleData = [{
         x: xBubble,
