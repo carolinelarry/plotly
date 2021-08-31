@@ -21,7 +21,7 @@ The dataset reveals that a small handful of microbial species (also called opera
 <img width="200" alt="Screen Shot 2021-08-30 at 8 51 28 PM" src="https://user-images.githubusercontent.com/79863465/131429003-7bb7c617-fc48-44ea-be94-3e366fdd83d6.png">
 
 
-5. Update all of the plots any time that a new sample is selected.
+5. Update all of the plots any time that a new sample is selected. Below is a preview of my interactive dashboard.
 
 
 <img width="1426" alt="Screen Shot 2021-08-30 at 8 50 39 PM" src="https://user-images.githubusercontent.com/79863465/131429084-e5307f11-953b-46a1-ae68-e55c67086b0f.png">
