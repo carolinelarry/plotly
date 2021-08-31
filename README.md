@@ -4,7 +4,7 @@ Built an interactive dashboard to explore the [Belly Button Biodiversity dataset
 
 The dataset reveals that a small handful of microbial species (also called operational taxonomic units, or OTUs, in the study) were present in more than 70% of people, while the rest were relatively rare.
 
-## Step 1: Plotly
+## Plotly
 
 1. Use the D3 library to read in the data.
 
@@ -23,17 +23,6 @@ The dataset reveals that a small handful of microbial species (also called opera
 
 5. Update all of the plots any time that a new sample is selected.
 
-
-
-## Advanced Challenge Assignment (Optional)
-
-The following task is advanced and therefore optional.
-
-* Adapt the Gauge Chart from <https://plot.ly/javascript/gauge-charts/> to plot the weekly washing frequency of the individual.
-
-* You will need to modify the example gauge code to account for values ranging from 0 through 9.
-
-* Update the chart whenever a new sample is selected.
 
 <img width="1426" alt="Screen Shot 2021-08-30 at 8 50 39 PM" src="https://user-images.githubusercontent.com/79863465/131429084-e5307f11-953b-46a1-ae68-e55c67086b0f.png">
 <img width="1437" alt="Screen Shot 2021-08-30 at 8 50 50 PM" src="https://user-images.githubusercontent.com/79863465/131429094-7d4dc457-655e-4698-981d-b2ed46784532.png">
