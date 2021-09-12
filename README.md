@@ -27,6 +27,9 @@ The dataset reveals that a small handful of microbial species (also called opera
 <img width="1426" alt="Screen Shot 2021-08-30 at 8 50 39 PM" src="https://user-images.githubusercontent.com/79863465/131429084-e5307f11-953b-46a1-ae68-e55c67086b0f.png">
 <img width="1437" alt="Screen Shot 2021-08-30 at 8 50 50 PM" src="https://user-images.githubusercontent.com/79863465/131429094-7d4dc457-655e-4698-981d-b2ed46784532.png">
 
+## Link to Dashboard
+https://carolinelarry.github.io/plotly/
+
 ## Contact
 Email: cgrace1011@gmail.com
 
